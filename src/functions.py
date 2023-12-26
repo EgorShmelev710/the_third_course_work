@@ -1,5 +1,4 @@
 import json
-from config import OPERATIONS_PATH
 
 
 def load_all_operations(path):
@@ -31,3 +30,17 @@ def transform_date(old_date):
     reversed_parts = reversed(date_parts)
     new_date = '.'.join(reversed_parts)
     return new_date
+
+
+def hiding_requisites(operation, way):
+    requisites = operation.get(way)
+    if requisites is not None:
+        parts = requisites.split()
+        number = parts[-1]
+        if requisites.lower().startswith('счет'):
+            hidden_number = f"**{number[-4:]}"
+        else:
+            hidden_number = f"{number[:4]} {number[4:6]}** **** {number[-4:]}"
+        parts[-1] = hidden_number
+        return (' '.join(parts))
+    return 'Unknown Source'
