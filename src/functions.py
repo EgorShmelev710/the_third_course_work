@@ -1,4 +1,5 @@
 import json
+from config import OPERATIONS_PATH
 
 
 def load_all_operations(path):
@@ -21,3 +22,12 @@ def sort_filtered_operations(path):
     """
     result = sorted(path, key=lambda path: path['date'], reverse=True)
     return result[:5]
+
+
+def transform_date(old_date):
+    date_splitter = old_date.split('T')
+    date = date_splitter[0]
+    date_parts = date.split('-')
+    reversed_parts = reversed(date_parts)
+    new_date = '.'.join(reversed_parts)
+    return new_date
